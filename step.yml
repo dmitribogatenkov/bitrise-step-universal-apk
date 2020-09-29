@@ -3,7 +3,7 @@ title: |-
 summary: |
   Generates an universal apk from an app bundle
 description: |
-  Runs a bundletool that gets an app bundle path and generates an universal apk that it can be upload to alternative app stores or test platforms.
+  Runs a bundletool that gets an app bundle path and generates an Universal Apk
 
 is_requires_admin_user: true
 is_always_run: false
@@ -20,47 +20,27 @@ deps:
   - name: wget
   - name: curl
 
-
 toolkit:
   bash:
     entry_file: step.sh
 
-
 inputs:
   - aab_path: "$BITRISE_AAB_PATH"
     opts:
-      title: "Build artifact path."
-      summary: "`Android App Bundle (.aab)`"
-      description: |-
-        Path(s) to the build artifact file `.aab`. You can build the bundle running `:bundleRelease` gradle task
-        Format examples:
-        - `/path/to/my/app.aab`
+      title: "Path of the generated AAB"
+      summary: ""
       is_required: true
-  - apk_name: "$BITRISE_APK_OUTPUT_NAME"
+  - apk_output_name: "$BITRISE_APK_OUTPUT_NAME"
     opts:
       title: "Universal apk name"
-      summary: "`Name of the resulting apk`"
-      description: |-
-        The name must end with .apk
-        Format examples:
-        - `apk_name.apk` or `apk_name`
-      is_required: false
-  - apk_output_dir: "$BITRISE_APK_OUTPUT_DIR"
-    opts:
-      title: "APK's output directory"
-      summary: "`Path where the apk's will be moved after`"
-      description: |-
-        If no Apk otuput dir is provided, the apk's will be at $BITRISE_APK_DIR
-        Format examples:
-        - `$BITRISE_DEPLOY_DIR`
-      is_required: false
+      summary: ""
+      description: ""
+      is_required: true
   - keystore_url: $BITRISEIO_ANDROID_KEYSTORE_URL
     opts:
       title: "Keystore url"
       summary: ""
-      description: |-
-        For remote keystores you can provide any download location (ex: https://URL/TO/keystore.jks).
-        For local keystores provide file path url. (ex: file://PATH/TO/keystore.jks).
+      description: ""
       is_required: true
       is_sensitive: true
   - keystore_password: $BITRISEIO_ANDROID_KEYSTORE_PASSWORD
@@ -77,24 +57,22 @@ inputs:
       description: ""
       is_required: true
       is_sensitive: true
-  - keystore_alias_password: $BITRISEIO_ANDROID_KEYSTORE_ALIAS_PASSWORD
+  - keystore_private_key_password: $BITRISEIO_ANDROID_KEYSTORE_ALIAS_PASSWORD
     opts:
-      title: "Keystore alias password"
+      title: "Private key password"
       summary: ""
       description: ""
       is_required: true
       is_sensitive: true
 
 outputs:
-  - BITRISE_APK_PATH:
+  - BITRISE_UNIVERSAL_APK_PATH:
     opts:
       title: "Universal apk path"
       summary: Path to the universal apk signed with the given keystore
-      description: |
-       You can upload this apk to an alternative app stores or your test platform
-  - BITRISE_APK_DIR:
+      description: ""
+  - BITRISE_UNIVERSAL_DEPLOY_DIR:
     opts:
-      title: "Apk direcotry"
-      summary: Path to directory where all the apk's are stored after the step.
-      description: |
-       You can upload this directory to an alternative app stores or your test platform
+      title: "Universal apk and aab directory"
+      summary: Path to directory where universal apk and aab are stored after the step
+      description: ""
